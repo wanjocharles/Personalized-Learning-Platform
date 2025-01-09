@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learnly - Manage Learning Goals</title>
+  <link rel="stylesheet" href="implement.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#browse-content">Browse Content</a></li>
+        <li><a href="#learning-path">Create Learning Path</a></li>
+        <li><a href="#manage-goals">Manage Goals</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Dashboard Section -->
+    <section id="dashboard">
+      <h2>Your Learning Dashboard</h2>
+      <div class="dashboard-stats">
+        <div class="stat">
+          <h3>Active Goals</h3>
+          <p id="active-goals-count">0 Goals</p> <!-- Active goals count -->
+        </div>
+        <div class="stat">
+          <h3>Completed Goals</h3>
+          <p id="completed-goals-count">0 Goals</p>
+        </div>
+        <div class="stat">
+          <h3>Progress</h3>
+           <p id="progress-count">0% Completed</p>
+        </div>
+      </div>
+    </section>
+     <section id="browse-content">
+      <h2>Browse Educational Content</h2>
+      <p>Explore curated courses and materials based on your interests.</p>
+      
+      <div class="content-list">
+        <div class="content-item">
+          <h3>Intro to Data Science</h3>
+          <p>Learn the basics of data analysis and machine learning.</p>
+          <button onclick="window.open('https://www.w3schools.com/datascience/ds_introduction.asp', '_blank')">View Details</button>
+        </div>
+        <div class="content-item">
+          <h3>Web Development 101</h3>
+          <p>Get started with HTML, CSS, and JavaScript.</p>
+          <button onclick="window.open('https://www.w3schools.com/whatis/', '_blank')">View Details</button>
+        </div>
+        <div class="content-item">
+          <h3>Advanced Python</h3>
+          <p>Dive deeper into Python for real-world applications.</p>
+          <button onclick="window.open('https://www.w3schools.com/python/', '_blank')">View Details</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="learning-path">
+      <h2>Create Your Learning Path</h2>
+      <p>Build a learning path tailored to your goals and interests.</p>
+
+      <form id="learning-path-form">
+        <label for="path-name">Learning Path Name:</label>
+        <input type="text" id="path-name" name="path-name" required>
+
+        <label for="path-courses">Select Courses:</label>
+        <select id="path-courses" name="path-courses" multiple>
+          <option value="data-science">Intro to Data Science</option>
+          <option value="web-dev">Web Development 101</option>
+          <option value="python">Advanced Python</option>
+        </select>
+
+        <button type="submit">Create Learning Path</button>
+      </form>
+    </section>
+
+    <!-- Manage Goals Section -->
+    <section id="manage-goals">
+      <h2>Manage Your Learning Goals</h2>
+      <p>Set and track your learning goals here.</p>
+
+
+      <form id="goals-form">
+        <label for="goal-title">Goal Title:</label>
+        <input type="text" id="goal-title" name="goal-title" required>
+
+        <label for="goal-deadline">Deadline:</label>
+        <input type="date" id="goal-deadline" name="goal-deadline" required>
+
+        <button type="submit">Add Goal</button>
+      </form>
+  <div>
+        <button id="select-all">Select All</button>
+        <button id="deselect-all">Deselect All</button>
+      </div>
+      <h3>Your Goals</h3>
+      <ul id="goals-list">
+        <!-- Goals will be dynamically listed here -->
+      </ul>
+    </section>
+      <!-- Progress Bar -->
+  <div id="progress-bar-container">
+    <div id="progress-bar">0%</div>
+  </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Learnly - All Rights Reserved</p>
+  </footer>
+
+  <script src="implement.js"></script>
+</body>
+</html>
