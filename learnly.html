@@ -1,92 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learnly - Manage Learning Goals</title>
+  <link rel="stylesheet" href="implement.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#browse-content">Browse Content</a></li>
+        <li><a href="#learning-path">Create Learning Path</a></li>
+        <li><a href="#manage-goals">Manage Goals</a></li>
+      </ul>
+    </nav>
+  </header>
 
+  <main>
+    <!-- Dashboard Section -->
+    <section id="dashboard">
+      <h2>Your Learning Dashboard</h2>
+      <div class="dashboard-stats">
+        <div class="stat">
+          <h3>Active Goals</h3>
+          <p id="active-goals-count">0 Goals</p> <!-- Active goals count -->
+        </div>
+        <div class="stat">
+          <h3>Completed Goals</h3>
+          <p id="completed-goals-count">0 Goals</p>
+        </div>
+        <div class="stat">
+          <h3>Progress</h3>
+           <p id="progress-count">0% Completed</p>
+        </div>
+      </div>
+    </section>
+     <section id="browse-content">
+      <h2>Browse Educational Content</h2>
+      <p>Explore curated courses and materials based on your interests.</p>
+      
+      <div class="content-list">
+        <div class="content-item">
+          <h3>Intro to Data Science</h3>
+          <p>Learn the basics of data analysis and machine learning.</p>
+          <button onclick="window.open('https://www.w3schools.com/datascience/ds_introduction.asp', '_blank')">View Details</button>
+        </div>
+        <div class="content-item">
+          <h3>Web Development 101</h3>
+          <p>Get started with HTML, CSS, and JavaScript.</p>
+          <button onclick="window.open('https://www.w3schools.com/whatis/', '_blank')">View Details</button>
+        </div>
+        <div class="content-item">
+          <h3>Advanced Python</h3>
+          <p>Dive deeper into Python for real-world applications.</p>
+          <button onclick="window.open('https://www.w3schools.com/python/', '_blank')">View Details</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="learning-path">
+      <h2>Create Your Learning Path</h2>
+      <p>Build a learning path tailored to your goals and interests.</p>
+
+      <form id="learning-path-form">
+        <label for="path-name">Learning Path Name:</label>
+        <input type="text" id="path-name" name="path-name" required>
+
+        <label for="path-courses">Select Courses:</label>
+        <select id="path-courses" name="path-courses" multiple>
+          <option value="data-science">Intro to Data Science</option>
+          <option value="web-dev">Web Development 101</option>
+          <option value="python">Advanced Python</option>
+        </select>
+
+        <button type="submit">Create Learning Path</button>
+      </form>
+    </section>
+
+    <!-- Manage Goals Section -->
+    <section id="manage-goals">
+      <h2>Manage Your Learning Goals</h2>
+      <p>Set and track your learning goals here.</p>
+
+
+      <form id="goals-form">
+        <label for="goal-title">Goal Title:</label>
+        <input type="text" id="goal-title" name="goal-title" required>
+
+        <label for="goal-deadline">Deadline:</label>
+        <input type="date" id="goal-deadline" name="goal-deadline" required>
+
+        <button type="submit">Add Goal</button>
+      </form>
+  <div>
+        <button id="select-all">Select All</button>
+        <button id="deselect-all">Deselect All</button>
+      </div>
+      <h3>Your Goals</h3>
+      <ul id="goals-list">
+        <!-- Goals will be dynamically listed here -->
+      </ul>
+    </section>
+      <!-- Progress Bar -->
+  <div id="progress-bar-container">
+    <div id="progress-bar">0%</div>
+  </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Learnly - All Rights Reserved</p>
+  </footer>
+
+  <script src="implement.js"></script>
+  <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learnly - Personalized Learning Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="learnly.css">
+    <title>Floating Chat Assistant</title>
+    <style>
+        /* Floating Chat Icon Styles */
+        #chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #0078D7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        #chat-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Chat Window Styles */
+        #chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        #chat-header {
+            background-color: #0078D7;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        #chat-input-container {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-right: 1px solid #ccc;
+        }
+
+        #chat-send {
+            padding: 10px;
+            background-color: #0078D7;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
-
 <body>
-    <header>
-         <nav>
-        <div class="logo">Learnly</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="register.html">Login</a></li>
+    <!-- Floating Chat Icon -->
+    <div id="chat-icon">
+        <img src="https://img.icons8.com/ios-filled/50/ffffff/chat.png" alt="Chat">
+    </div>
 
-        </ul>
-    </nav>
-    </header>
+    <!-- Chat Window -->
+    <div id="chat-window">
+        <div id="chat-header">Chat Assistant</div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type your message...">
+            <button id="chat-send">Send</button>
+        </div>
+    </div>
 
-    <main>
-      <section id="home" class="hero">
-    <h1>Welcome to Learnly</h1>
-    <p>AI-powered personalized learning paths tailored just for you.</p>
-    <img src="F:\LEARNLY ALX PROJECT\Cover.webp"alt="Learnly Hero Image">
-    <button onclick="location.href='#features'">Explore Features</button>
-</section>
-<section id="about" class="about">
-    <h1>Welcome to Learnly</h1>
-    <p>
-Learnly is an innovative platform designed to empower lifelong learners by providing the tools they need to achieve their personal and professional goals. Its vision is to transform learning into a dynamic, personalized journey while making the process engaging and user-friendly. The platform offers curated educational content from reputable sources, covering a wide range of topics from academic subjects to professional skills and hobbies. Users can create personalized learning paths tailored to their unique objectives, whether it's mastering a new skill, preparing for exams, or exploring a new interest. These paths are flexible, allowing users to add or modify topics as they progress.
+    <script>
+        const apiKey = "sk-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"; // 
 
-To keep learners motivated, Learnly includes gamification features like badges, points, and rewards, along with community-driven opportunities to collaborate and compete with others. The platform also leverages AI-powered recommendations to suggest relevant courses, books, and videos based on user interests and progress, ensuring a fresh and engaging learning experience. Users can monitor their achievements with visual dashboards, which provide insights into their learning milestones, time spent, and areas for improvement.
+        // Toggle Chat Window
+        document.getElementById('chat-icon').addEventListener('click', () => {
+            const chatWindow = document.getElementById('chat-window');
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+        });
 
-Learnly stands out with its user-centric design, comprehensive support through FAQs and forums, and its ability to integrate with other platforms like calendars, productivity tools, and learning platforms such as Udemy or Coursera. Accessible on any device, it enables users to learn on the go, making it ideal for students, professionals, hobbyists, and anyone with a passion for continuous self-improvement.
+        // Send Message to OpenAI API
+        async function sendMessage() {
+            const inputField = document.getElementById('chat-input');
+            const messagesDiv = document.getElementById('chat-messages');
+            const userMessage = inputField.value.trim();
 
-Looking ahead, Learnly plans to integrate advanced features like AR/VR for immersive learning experiences, AI tutors for personalized guidance, and partnerships with global educational institutions and content creators. These advancements aim to solidify its position as a leader in the edtech space and further its mission of making lifelong learning accessible and enjoyable for all.</p>
-</section>
+            if (!userMessage) return;
 
-        <section id="features" class="features">
-            <h2>Features</h2>
-            <div class="feature-list">
-                <div class="feature">
-                    <img src="F:\LEARNLY ALX PROJECT\AI.jpg"alt="AI Recommendations">
-                    <h3>AI-Powered Recommendations</h3>
-                    <p>Get personalized learning suggestions based on your goals.</p>
-                </div>
-                <div class="feature">
-                    <img src="F:\LEARNLY ALX PROJECT\Secure User Authentication.jpg" alt="Secure Authentication">
-                    <h3>Secure User Authentication</h3>
-                    <p>Login securely to access your learning journey.</p>
-                </div>
-                <div class="feature">
-                    <img src="F:\LEARNLY ALX PROJECT\track your progress.jpg" alt="Progress Tracking">
-                    <h3>Track Your Progress</h3>
-                    <p>Monitor and manage your learning path efficiently.</p>
-                </div>
-            </div>
-        </section>
+            // Display user message
+            const userDiv = document.createElement('div');
+            userDiv.textContent = userMessage;
+            userDiv.style.textAlign = 'right';
+            userDiv.style.color = 'blue';
+            messagesDiv.appendChild(userDiv);
 
-        <section id="contact" class="contact">
-            <h2>Contact Us</h2>
-            <form action="#" method="POST">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
+            inputField.value = '';
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+            // Call OpenAI API
+            try {
+                const response = await fetch('https://api.openai.com/v1/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`,
+                    },
+                    body: JSON.stringify({
+                        model: 'text-davinci-003',
+                        prompt: userMessage,
+                        max_tokens: 150,
+                        temperature: 0.7,
+                    }),
+                });
 
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" rows="4" required></textarea>
+                const data = await response.json();
+                const botReply = data.choices[0]?.text.trim() || 'No response from the assistant.';
 
-                <button type="submit">Submit</button>
-            </form>
-        </section>  
-            </form>
-        </section>
-        <script src="script.js"></script>
-    </main>
+                // Display bot response
+                const botDiv = document.createElement('div');
+                botDiv.textContent = botReply;
+                botDiv.style.textAlign = 'left';
+                botDiv.style.color = 'green';
+                messagesDiv.appendChild(botDiv);
 
-    <footer>
-        <p>&copy; 2025 Learnly. All rights reserved.</p>
-    </footer>
+                // Scroll to the latest message
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            } catch (error) {
+                console.error('Error communicating with OpenAI:', error);
+                const errorDiv = document.createElement('div');
+                errorDiv.textContent = 'Error connecting to assistant.';
+                errorDiv.style.color = 'red';
+                messagesDiv.appendChild(errorDiv);
+            }
+        }
+
+        // Send message on button click
+        document.getElementById('chat-send').addEventListener('click', sendMessage);
+
+        // Send message on Enter key press
+        document.getElementById('chat-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
 </body>
-
 </html>
+
